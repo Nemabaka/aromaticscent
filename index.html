@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Moyana Purifying Essentials | Sacred Self-Care</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=ZAR"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* ===== COLOR PALETTE ===== */
+    :root {
+      --ivory: #F4F3F1; --evergreen: #68756D; --sage: #A1A79E;
+      --terracotta: #B57B66; --blush: #DECEBF; --white: #FFFFFF;
+      --dark-evergreen: #4A554F;
+    }
+    
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--evergreen); }
+    h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; }
+    h2 { font-size: clamp(1.8rem, 6vw, 2.8rem); font-weight: 600; margin-bottom: 1.5rem; }
+    body { font-family: 'Source Sans Pro', sans-serif; font-size: 1rem; color: var(--dark-evergreen); background: var(--ivory); line-height: 1.6; position: relative; }
+    
+    /* Fading Logo Background */
+    body::before { content: "MOYANA"; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-5deg); font-family: 'Playfair Display', serif; font-size: 15vw; font-weight: 700; color: var(--evergreen); opacity: 0.03; pointer-events: none; z-index: -1; white-space: nowrap; letter-spacing: 20px; }
+    
+    /* Header */
+    .header { background: var(--ivory); padding: 0.8rem 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .logo-main { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--evergreen); line-height: 1; }
+    .logo-tagline { font-family: 'Source Sans Pro', sans-serif; font-weight: 300; font-size: 0.7rem; letter-spacing: 1px; color: var(--sage); text-transform: uppercase; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--evergreen); font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--terracotta); }
+    .btn-shop { background: var(--terracotta); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .cart-icon { position: relative; cursor: pointer; font-size: 1.3rem; color: var(--evergreen); }
+    #cart-count { position: absolute; top: -8px; right: -10px; background: var(--terracotta); color: white; font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 50%; min-width: 20px; text-align: center; }
+    
+    @media (max-width: 768px) {
+      .header-container { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+      .cart-icon { position: absolute; top: 1.2rem; right: 1rem; }
+    }
+    
+    /* Hero Section */
+    .hero { background: var(--blush); padding: 3rem 1rem; margin-bottom: 2rem; position: relative; }
+    .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+    .hero-content h1 { margin-bottom: 1rem; }
+    .hero-content p { color: var(--sage); font-size: 1.2rem; margin-bottom: 1.5rem; }
+    .hero-btn { background: var(--terracotta); color: white; border: none; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; cursor: pointer; }
+    .hero-image { background: rgba(255,255,255,0.3); height: 250px; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--sage); }
+    @media (max-width: 768px) { .hero-container { grid-template-columns: 1fr; text-align: center; } }
+    
+    /* Products */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; }
+    .products-section { padding: 2rem 0; }
+    .section-header { text-align: center; margin-bottom: 2rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s; cursor: pointer; }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-image { height: 220px; background: var(--sage); opacity: 0.4; display: flex; align-items: center; justify-content: center; font-style: italic; }
+    .product-info { padding: 1.5rem; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--evergreen); margin-bottom: 0.25rem; }
+    .product-size { font-size: 0.8rem; color: var(--sage); margin-bottom: 0.75rem; }
+    .product-description { font-size: 0.9rem; color: var(--dark-evergreen); margin-bottom: 1rem; line-height: 1.5; }
+    .product-price { font-size: 1.2rem; font-weight: 600; color: var(--terracotta); margin-bottom: 1rem; }
+    .btn-add-to-cart { background: transparent; border: 2px solid var(--terracotta); color: var(--terracotta); font-weight: 600; padding: 0.7rem; border-radius: 50px; width: 100%; cursor: pointer; transition: all 0.2s; }
+    .btn-add-to-cart:hover { background: var(--terracotta); color: white; }
+    
+    /* Coming Soon */
+    .coming-soon { background: linear-gradient(135deg, var(--evergreen), var(--sage)); color: white; text-align: center; padding: 1.5rem; border-radius: 15px; margin: 2rem 0; position: relative; overflow: hidden; }
+    .coming-soon::before { content: "MOYANA"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; font-weight: 700; color: white; opacity: 0.1; white-space: nowrap; }
+    .coming-soon h3 { color: white; position: relative; z-index: 2; font-size: 1.4rem; }
+    
+    /* Ritual Section */
+    .ritual-section { background: var(--sage); padding: 3rem 1rem; margin: 2rem 0; position: relative; text-align: center; }
+    .elements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+    .element h4 { font-family: 'Playfair Display', serif; color: white; font-size: 1.3rem; }
+    .element p { color: white; opacity: 0.8; }
+    .ritual-text { color: white; max-width: 800px; margin: 2rem auto 0; }
+    
+    /* About Section */
+    .about-section { padding: 3rem 0; }
+    .about-container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+    .about-quote { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--terracotta); font-style: italic; margin-top: 1.5rem; border-left: 4px solid var(--terracotta); padding-left: 1rem; }
+    .about-image { background: var(--blush); height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+    @media (max-width: 768px) { .about-container { grid-template-columns: 1fr; } .about-image { order: -1; } }
+    
+    /* Testimonials */
+    .testimonials { background: var(--blush); padding: 3rem 1rem; text-align: center; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1280px; margin: 0 auto; }
+    .testimonial-card { background: white; padding: 1.5rem; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .testimonial-text { font-style: italic; margin-bottom: 1rem; }
+    .testimonial-author { font-weight: 600; color: var(--evergreen); }
+    
+    /* Newsletter */
+    .newsletter { background: var(--blush); padding: 3rem 1rem; text-align: center; }
+    .newsletter-container { max-width: 600px; margin: 0 auto; }
+    .newsletter-form { display: flex; gap: 0.8rem; max-width: 500px; margin: 0 auto; }
+    .newsletter-input { flex: 1; padding: 0.8rem; border: 1px solid var(--sage); border-radius: 50px; }
+    .newsletter-btn { background: var(--terracotta); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 600; cursor: pointer; }
+    @media (max-width: 500px) { .newsletter-form { flex-direction: column; } }
+    
+    /* Footer */
+    .footer { background: var(--evergreen); color: white; padding: 3rem 1rem 2rem; }
+    .footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .footer-logo .logo-main { color: white; font-size: 1.8rem; }
+    .footer-links h4 { font-family: 'Playfair Display', serif; color: white; margin-bottom: 1rem; }
+    .footer-links a { display: block; color: white; text-decoration: none; margin-bottom: 0.5rem; opacity: 0.8; }
+    .footer-links a:hover { opacity: 1; color: var(--terracotta); }
+    .contact-info i { margin-right: 0.5rem; color: var(--terracotta); }
+    .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+    .social-links a { color: white; font-size: 1.5rem; }
+    .social-links a:hover { color: var(--terracotta); }
+    .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    
+    /* Cart Drawer */
+    .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(3px); z-index: 200; opacity: 0; visibility: hidden; transition: all 0.3s; }
+    .cart-overlay.active { opacity: 1; visibility: visible; }
+    .cart-drawer { position: fixed; top: 0; right: -450px; width: 90%; max-width: 420px; height: 100vh; background: white; z-index: 201; padding: 1.5rem; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.1); overflow-y: auto; }
+    .cart-drawer.open { right: 0; }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--blush); }
+    .close-cart { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--sage); }
+    .cart-items { max-height: 40vh; overflow-y: auto; margin-bottom: 1rem; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--blush); }
+    .cart-item-details h4 { color: var(--evergreen); font-size: 1rem; margin-bottom: 0.3rem; }
+    .cart-item-price { color: var(--terracotta); font-weight: 600; font-size: 0.9rem; }
+    .cart-item-actions button { background: none; border: 1px solid var(--sage); border-radius: 50%; width: 28px; height: 28px; cursor: pointer; margin-left: 0.5rem; transition: all 0.2s; }
+    .cart-item-actions button:hover { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+    .cart-total { font-size: 1.2rem; font-weight: 600; margin: 1rem 0; padding-top: 1rem; border-top: 2px solid var(--blush); display: flex; justify-content: space-between; }
+    .btn-checkout { background: var(--terracotta); color: white; border: none; padding: 0.8rem; width: 100%; border-radius: 50px; font-weight: 600; cursor: pointer; margin-bottom: 0.5rem; transition: background 0.2s; }
+    .btn-checkout:hover { background: #9f6854; }
+    .checkout-form { margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--blush); display: none; }
+    .checkout-form.active { display: block; }
+    .checkout-form input { width: 100%; padding: 0.8rem; margin-bottom: 0.8rem; border: 1px solid var(--sage); border-radius: 10px; font-family: 'Source Sans Pro', sans-serif; }
+    .order-summary { background: var(--blush); padding: 1rem; border-radius: 10px; margin: 1rem 0; font-size: 0.9rem; }
+    .payment-options { display: flex; gap: 1rem; margin: 1rem 0; }
+    .payment-btn { flex: 1; background: white; border: 2px solid var(--sage); border-radius: 10px; padding: 0.8rem; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .payment-btn:hover { border-color: var(--terracotta); background: var(--blush); }
+    .payment-btn.active { border-color: var(--terracotta); background: var(--terracotta); color: white; }
+    .payment-btn i { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+    .notification { position: fixed; bottom: 20px; right: 20px; background: var(--evergreen); color: white; padding: 1rem 2rem; border-radius: 50px; z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .notification.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header">
+  <div class="header-container">
+    <div class="logo">
+      <div class="logo-main">MOYANA</div>
+      <div class="logo-tagline">PURIFYING ESSENTIALS</div>
+    </div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#products">Candles</a>
+      <a href="#coming-soon">Incense <span style="color: var(--terracotta); font-size: 0.8rem;">(Soon)</span></a>
+      <a href="#about">Our Story</a>
+      <a href="#ritual">Ritual</a>
+      <a href="#contact">Contact</a>
+      <button class="btn-shop">Shop</button>
+    </div>
+    <div class="cart-icon" id="cartToggle">
+      <i class="fas fa-shopping-bag"></i>
+      <span id="cart-count">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1>Handcrafted Ritual Candles</h1>
+      <p>Inspired by Earth, Air, Fire & Water</p>
+      <button class="hero-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop the Ritual Collection</button>
+    </div>
+    <div class="hero-image">
+      <p>[Your candle photography here]</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRODUCT SECTION ==================== -->
+<section class="products-section" id="products">
+  <div class="container">
+    <div class="section-header">
+      <h2>Our Ritual Candles</h2>
+      <p>Handcrafted with intention, using carefully selected herbs and natural elements</p>
+    </div>
+    <div class="product-grid">
+      <div class="product-card" data-id="1" data-name="Neroli" data-price="28.99">
+        <div class="product-image"><p>[Neroli candle photo]</p></div>
+        <div class="product-info">
+          <div class="product-name">Neroli</div>
+          <div class="product-size">200ml</div>
+          <div class="product-description">A fresh, radiant blend of citrus and delicate blossoms. Clears the mind and restores balance.</div>
+          <div class="product-price">$28.99</div>
+          <button class="btn-add-to-cart" data-id="1" data-name="Neroli" data-price="28.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-id="2" data-name="Tropical Escape" data-price="32.99">
+        <div class="product-image"><p>[Tropical Escape candle photo]</p></div>
+        <div class="product-info">
+          <div class="product-name">Tropical Escape</div>
+          <div class="product-size">200ml</div>
+          <div class="product-description">A warm blend of creamy coconut and tropical florals with vanilla. Soothes the heart.</div>
+          <div class="product-price">$32.99</div>
+          <button class="btn-add-to-cart" data-id="2" data-name="Tropical Escape" data-price="32.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-id="3" data-name="Rosemary and Sage" data-price="29.99">
+        <div class="product-image"><p>[Rosemary & Sage candle photo]</p></div>
+        <div class="product-info">
+          <div class="product-name">Rosemary and Sage</div>
+          <div class="product-size">200ml</div>
+          <div class="product-description">A crisp herbal infusion of rosemary and sage. Cleanses energy and sharpens clarity.</div>
+          <div class="product-price">$29.99</div>
+          <button class="btn-add-to-cart" data-id="3" data-name="Rosemary and Sage" data-price="29.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-id="4" data-name="Mpepho" data-price="34.99">
+        <div class="product-image"><p>[Mpepho candle photo]</p></div>
+        <div class="product-info">
+          <div class="product-name">Mpepho</div>
+          <div class="product-size">200ml</div>
+          <div class="product-description">Sacred ancestral candle with earthy smoke. Connects physical and spiritual realms.</div>
+          <div class="product-price">$34.99</div>
+          <button class="btn-add-to-cart" data-id="4" data-name="Mpepho" data-price="34.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="coming-soon" id="coming-soon">
+      <h3>Incense Sticks & Cones</h3>
+      <p>Coming soon • Launching shortly</p>
+      <p style="margin-top: 0.5rem;">Be the first to know when we launch</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RITUAL SECTION ==================== -->
+<section class="ritual-section" id="ritual">
+  <div class="ritual-container">
+    <h2>The Four Elements Ritual</h2>
+    <div class="elements-grid">
+      <div class="element"><h4>Earth</h4><p>Grounding & stability</p></div>
+      <div class="element"><h4>Air</h4><p>Clarity & intention</p></div>
+      <div class="element"><h4>Fire</h4><p>Transformation & energy</p></div>
+      <div class="element"><h4>Water</h4><p>Cleansing & flow</p></div>
+    </div>
+    <p class="ritual-text">Together, these elements form the foundation of our philosophy — bringing harmony, purification, and balance into everyday living.</p>
+  </div>
+</section>
+
+<!-- ==================== ABOUT SECTION ==================== -->
+<section class="about-section" id="about">
+  <div class="about-container">
+    <div class="about-content">
+      <h2>Our Sacred Story</h2>
+      <p><strong>Moyana Purifying Essentials</strong> represents spiritual cleansing, ancestral wisdom, nature, and calm luxury. The brand bridges African traditional healing practices with a modern, minimalist aesthetic.</p>
+      <p>Moyana Purifying Essentials is a sacred self-care brand rooted in the belief that our spaces, bodies, and spirits deserve to feel cleansed, balanced, and restored.</p>
+      <p>Each product is thoughtfully handcrafted using carefully selected herbs and natural elements chosen for their traditional energetic and aromatic properties.</p>
+      <div class="about-quote">
+        Light with intention.<br>
+        Cleanse with purpose.<br>
+        Return to yourself.
+      </div>
+    </div>
+    <div class="about-image"><p>[Your brand imagery here]</p></div>
+  </div>
+</section>
+
+<!-- ==================== TESTIMONIALS ==================== -->
+<section class="testimonials">
+  <h2>From Our Community</h2>
+  <div class="testimonial-grid">
+    <div class="testimonial-card"><p class="testimonial-text">"The Neroli candle clears my mind every morning. It's become my favorite ritual."</p><p class="testimonial-author">— Sarah K.</p></div>
+    <div class="testimonial-card"><p class="testimonial-text">"Beautiful energy. You can feel the intention in every candle."</p><p class="testimonial-author">— Michael O.</p></div>
+    <div class="testimonial-card"><p class="testimonial-text">"Finally found candles that align with my spiritual practice. The Mpepho candle is so special."</p><p class="testimonial-author">— Thandi M.</p></div>
+  </div>
+</section>
+
+<!-- ==================== NEWSLETTER ==================== -->
+<section class="newsletter">
+  <div class="newsletter-container">
+    <h3>Join Our Ritual</h3>
+    <p>Subscribe to be the first to know about new collections, including our upcoming incense range.</p>
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" id="newsletterEmail" placeholder="Your email" class="newsletter-input" required>
+      <button type="submit" class="newsletter-btn">Subscribe</button>
+    </form>
+    <p id="newsletterMessage" style="margin-top: 0.5rem; font-size: 0.8rem; display: none;"></p>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer" id="contact">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <div class="logo-main">MOYANA</div>
+      <div class="logo-tagline">PURIFYING ESSENTIALS</div>
+      <p style="margin-top: 1rem;">Sacred self-care rooted in ancestral wisdom.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <a href="#home">Home</a>
+      <a href="#products">Candles</a>
+      <a href="#coming-soon">Incense (Coming Soon)</a>
+      <a href="#about">Our Story</a>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="#">Shipping</a>
+      <a href="#">Returns</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Connect</h4>
+      <div class="contact-info">
+        <i class="far fa-envelope"></i> moyayapurifyingessentials@gmail.com<br>
+        <i class="fab fa-whatsapp"></i> 068 018 4565<br>
+        <i class="fab fa-instagram"></i> @moyana_purifying_essentials
+      </div>
+      <div class="social-links">
+        <a href="https://instagram.com/moyana_purifying_essentials" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/27680184565" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Moyana Purifying Essentials. All rights reserved. Made with intention.</p>
+  </div>
+</footer>
+
+<!-- ==================== CART DRAWER ==================== -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Ritual Cart</h3>
+    <button class="close-cart" id="closeCartBtn"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-total">
+    <span>Total</span>
+    <span id="cartTotal">$0.00</span>
+  </div>
+  <button class="btn-checkout" id="checkoutBtn">Proceed to Checkout</button>
+  <div class="checkout-form" id="checkoutForm">
+    <h4 style="margin-bottom: 1rem;">Complete Your Order</h4>
+    <input type="text" id="customerName" placeholder="Full Name" required>
+    <input type="email" id="customerEmail" placeholder="Email Address" required>
+    <input type="tel" id="customerPhone" placeholder="Phone Number (for WhatsApp updates)">
+    <div class="order-summary" id="orderSummary"></div>
+    <div class="payment-options">
+      <div class="payment-btn" data-method="payfast">
+        <i class="fas fa-credit-card"></i>
+        PayFast
+      </div>
+      <div class="payment-btn" data-method="paypal">
+        <i class="fab fa-paypal"></i>
+        PayPal
+      </div>
+    </div>
+    <button class="btn-checkout" id="placeOrderBtn">Place Order & Pay</button>
+  </div>
+</div>
+
+<!-- Notification -->
+<div class="notification" id="notification">Item added to cart</div>
+
+<script>
+// ==================== CONFIGURATION ====================
+// REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY_HERE"; // 🔴 REPLACE THIS!
+const EMAILJS_SERVICE_ID = "moyana_service";
+const EMAILJS_TEMPLATE_ID = "moyana_order_template";
+
+// PayFast Test Credentials (replace with live credentials when ready)
+const PAYFAST_MERCHANT_ID = "10000100"; // Test merchant ID
+const PAYFAST_MERCHANT_KEY = "46f0cd694581a"; // Test merchant key
+
+// ==================== INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize EmailJS
+  if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY_HERE") {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    console.log("✅ EmailJS initialized");
+  } else {
+    console.warn("⚠️ EmailJS not configured. Get your key from emailjs.com");
+  }
+  
+  loadCart();
+  updateCartDisplay();
+});
+
+// ==================== CART FUNCTIONALITY ====================
+let cart = [];
+
+function loadCart() {
+  const saved = localStorage.getItem('moyana_cart');
+  if (saved) cart = JSON.parse(saved);
+  updateCartIcon();
+}
+
+function saveCart() {
+  localStorage.setItem('moyana_cart', JSON.stringify(cart));
+  updateCartIcon();
+}
+
+function updateCartIcon() {
+  const total = cart.reduce((s, i) => s + i.quantity, 0);
+  document.getElementById('cart-count').textContent = total;
+}
+
+function addToCart(id, name, price) {
+  const existing = cart.find(i => i.id === id);
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({ id: parseInt(id), name, price: parseFloat(price), quantity: 1 });
+  }
+  saveCart();
+  updateCartDisplay();
+  showNotification(`${name} added to cart!`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  saveCart();
+  updateCartDisplay();
+}
+
+function updateQuantity(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (item) {
+    item.quantity += delta;
+    if (item.quantity <= 0) removeFromCart(id);
+    else saveCart();
+    updateCartDisplay();
+  }
+}
+
+function updateCartDisplay() {
+  const container = document.getElementById('cartItems');
+  const totalSpan = document.getElementById('cartTotal');
+  
+  if (cart.length === 0) {
+    container.innerHTML = '<p style="text-align: center; color: var(--sage); padding: 2rem;">Your ritual cart is empty.<br>Add some candles to begin.</p>';
+    totalSpan.textContent = '$0.00';
+    return;
+  }
+  
+  let html = '';
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+    html += `
+      <div class="cart-item">
+        <div class="cart-item-details">
+          <h4>${item.name}</h4>
+          <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
+        </div>
+        <div class="cart-item-actions">
+          <button onclick="updateQuantity(${item.id}, -1)">-</button>
+          <button onclick="updateQuantity(${item.id}, 1)">+</button>
+          <button onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+  totalSpan.textContent = `$${total.toFixed(2)}`;
+  
+  // Update order summary in checkout
+  updateOrderSummary();
+}
+
+function updateOrderSummary() {
+  const summary = document.getElementById('orderSummary');
+  if (!summary) return;
+  
+  if (cart.length === 0) {
+    summary.innerHTML = '<p>Your cart is empty</p>';
+    return;
+  }
+  
+  let items = '';
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+    items += `<div>${item.name} x ${item.quantity} — $${(item.price * item.quantity).toFixed(2)}</div>`;
+  });
+  
+  summary.innerHTML = `
+    <strong>Order Summary:</strong><br>
+    ${items}
+    <hr style="margin: 0.5rem 0;">
+    <strong>Total: $${total.toFixed(2)}</strong>
+  `;
+}
+
+function showNotification(msg) {
+  const notif = document.getElementById('notification');
+  notif.textContent = msg;
+  notif.classList.add('show');
+  setTimeout(() => notif.classList.remove('show'), 2000);
+}
+
+// ==================== CART DRAWER CONTROLS ====================
+function openCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('active');
+}
+
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('active');
+  document.getElementById('checkoutForm').classList.remove('active');
+}
+
+document.getElementById('cartToggle').addEventListener('click', openCart);
+document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+document.getElementById('cartOverlay').addEventListener('click', closeCart);
+
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+  if (cart.length === 0) {
+    showNotification('Your cart is empty');
+    return;
+  }
+  updateOrderSummary();
+  document.getElementById('checkoutForm').classList.add('active');
+});
+
+// ==================== ADD TO CART BUTTONS ====================
+document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const id = btn.dataset.id;
+    const name = btn.dataset.name;
+    const price = btn.dataset.price;
+    addToCart(id, name, price);
+    openCart();
+  });
+});
+
+// ==================== PAYMENT INTEGRATION ====================
+let selectedPayment = 'payfast';
+
+document.querySelectorAll('.payment-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedPayment = btn.dataset.method;
+  });
+});
+document.querySelector('.payment-btn').classList.add('active');
+
+async function sendOrderConfirmation(customerName, customerEmail, orderDetails, total) {
+  if (!EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY === "vBuE54_a2XZ7B_RST") {
+    console.warn("EmailJS not configured");
+    return false;
+  }
+  
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      customer_name: customerName,
+      customer_email: customerEmail,
+      order_items: orderDetails,
+      total_amount: `$${total.toFixed(2)}`,
+      order_date: new Date().toLocaleString()
+    });
+    console.log("✅ Order confirmation sent");
+    return true;
+  } catch (error) {
+    console.error("Email error:", error);
+    return false;
+  }
+}
+
+function processPayFastOrder(customerName, customerEmail, total) {
+  // Create form and submit to PayFast
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'https://sandbox.payfast.co.za/eng/process'; // Use live URL for production
+  
+  const params = {
+    merchant_id: PAYFAST_MERCHANT_ID,
+    merchant_key: PAYFAST_MERCHANT_KEY,
+    return_url: window.location.href,
+    cancel_url: window.location.href,
+    notify_url: window.location.href,
+    name_first: customerName.split(' ')[0] || '',
+    name_last: customerName.split(' ').slice(1).join(' ') || '',
+    email_address: customerEmail,
+    m_payment_id: `MOYANA_${Date.now()}`,
+    amount: total.toFixed(2),
+    item_name: 'Moyana Ritual Candles',
+    item_description: `Order from ${customerName}`,
+  };
+  
+  for (const [key, value] of Object.entries(params)) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = value;
+    form.appendChild(input);
+  }
+  
+  document.body.appendChild(form);
+  form.submit();
+}
+
+function processPayPalOrder(customerName, customerEmail, total, orderItems) {
+  // Create PayPal order
+  showNotification('Redirecting to PayPal...');
+  
+  // In production, you'd use PayPal's JS SDK
+  // For demo, we'll show a modal
+  alert(`🔮 PayPal Demo\n\nOrder from: ${customerName}\nEmail: ${customerEmail}\nTotal: $${total.toFixed(2)}\n\nIn production, this would redirect to PayPal.`);
+  
+  // After payment, send email
+  sendOrderConfirmation(customerName, customerEmail, orderItems, total);
+  clearCartAfterOrder();
+}
+
+function clearCartAfterOrder() {
+  cart = [];
+  saveCart();
+  updateCartDisplay();
+  closeCart();
+  showNotification('✨ Thank you! Order confirmed. Check your email.');
+}
+
+document.getElementById('placeOrderBtn').addEventListener('click', async () => {
+  const name = document.getElementById('customerName').value.trim();
+  const email = document.getElementById('customerEmail').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  
+  if (!name || !email) {
+    showNotification('Please enter your name and email');
+    return;
+  }
+  
+  if (cart.length === 0) {
+    showNotification('Your cart is empty');
+    return;
+  }
+  
+  let total = 0;
+  let orderDetails = '';
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+    orderDetails += `${item.name} x ${item.quantity} — $${(item.price * item.quantity).toFixed(2)}\n`;
+  });
+  
+  // Send order confirmation email (async, don't wait)
+  sendOrderConfirmation(name, email, orderDetails, total);
+  
+  // Process payment based on selection
+  if (selectedPayment === 'payfast') {
+    processPayFastOrder(name, email, total);
+  } else {
+    processPayPalOrder(name, email, total, orderDetails);
+  }
+});
+
+// ==================== NEWSLETTER SUBSCRIPTION ====================
+document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('newsletterEmail').value;
+  const msgDiv = document.getElementById('newsletterMessage');
+  
+  msgDiv.style.display = 'block';
+  
+  if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "") {
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, 'moyana_newsletter', {
+        subscriber_email: email,
+        subscribe_date: new Date().toLocaleString()
+      });
+      msgDiv.innerHTML = '✨ Thank you for joining our ritual! Check your email.';
+      msgDiv.style.color = 'green';
+      document.getElementById('newsletterEmail').value = '';
+    } catch (error) {
+      msgDiv.innerHTML = 'Thank you for subscribing! (Demo mode)';
+      msgDiv.style.color = 'var(--terracotta)';
+      document.getElementById('newsletterEmail').value = '';
+    }
+  } else {
+    msgDiv.innerHTML = 'Thank you for subscribing! (Demo mode - configure EmailJS for real emails)';
+    msgDiv.style.color = 'var(--terracotta)';
+    document.getElementById('newsletterEmail').value = '';
+  }
+  
+  setTimeout(() => {
+    msgDiv.style.display = 'none';
+  }, 5000);
+});
+
+// ==================== SMOOTH SCROLL ====================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Shop button scroll
+document.querySelector('.btn-shop').addEventListener('click', () => {
+  document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
