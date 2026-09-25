@@ -10,107 +10,187 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- EmailJS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=ZAR"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    /* ===== COLOR PALETTE ===== */
     :root {
       --ivory: #F4F3F1; --evergreen: #68756D; --sage: #A1A79E;
       --terracotta: #B57B66; --blush: #DECEBF; --white: #FFFFFF;
       --dark-evergreen: #4A554F;
     }
-    
-    /* ===== TYPOGRAPHY ===== */
     h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--evergreen); }
     h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; }
     h2 { font-size: clamp(1.8rem, 6vw, 2.8rem); font-weight: 600; margin-bottom: 1.5rem; }
     body { font-family: 'Source Sans Pro', sans-serif; font-size: 1rem; color: var(--dark-evergreen); background: var(--ivory); line-height: 1.6; position: relative; }
     
-    /* Fading Logo Background */
-    body::before { content: "MOYANA"; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-5deg); font-family: 'Playfair Display', serif; font-size: 15vw; font-weight: 700; color: var(--evergreen); opacity: 0.03; pointer-events: none; z-index: -1; white-space: nowrap; letter-spacing: 20px; }
+    body::before { content: "MOYANA"; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-5deg); font-family: 'Playfair Display', serif; font-size: 15vw; font-weight: 700; color: var(--evergreen); opacity: 0.03; pointer-events: none; z-index: -1; white-space: nowrap; letter-spacing: 20px; border: none; }
+    body::after { content: "PURIFYING ESSENTIALS"; position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%) rotate(-5deg); font-family: 'Source Sans Pro', sans-serif; font-size: 3vw; font-weight: 300; color: var(--sage); opacity: 0.03; pointer-events: none; z-index: -1; white-space: nowrap; letter-spacing: 8px; border: none; }
     
-    /* Header */
+    *:focus { outline: none !important; }
+    
     .header { background: var(--ivory); padding: 0.8rem 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
     .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .logo-main { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--evergreen); line-height: 1; }
     .logo-tagline { font-family: 'Source Sans Pro', sans-serif; font-weight: 300; font-size: 0.7rem; letter-spacing: 1px; color: var(--sage); text-transform: uppercase; }
-    .nav-links { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
-    .nav-links a { text-decoration: none; color: var(--evergreen); font-weight: 500; transition: color 0.2s; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--evergreen); font-weight: 500; transition: color 0.2s; font-size: 0.95rem; }
     .nav-links a:hover { color: var(--terracotta); }
-    .btn-shop { background: var(--terracotta); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .btn-shop { background: var(--terracotta); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 600; cursor: pointer; }
     .cart-icon { position: relative; cursor: pointer; font-size: 1.3rem; color: var(--evergreen); }
     #cart-count { position: absolute; top: -8px; right: -10px; background: var(--terracotta); color: white; font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 50%; min-width: 20px; text-align: center; }
     
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .header-container { flex-direction: column; align-items: stretch; }
       .nav-links { justify-content: center; }
       .cart-icon { position: absolute; top: 1.2rem; right: 1rem; }
     }
     
-    /* Hero Section */
     .hero { background: var(--blush); padding: 3rem 1rem; margin-bottom: 2rem; position: relative; }
     .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
     .hero-content h1 { margin-bottom: 1rem; }
     .hero-content p { color: var(--sage); font-size: 1.2rem; margin-bottom: 1.5rem; }
     .hero-btn { background: var(--terracotta); color: white; border: none; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; cursor: pointer; }
-    .hero-image { background: rgba(255,255,255,0.3); height: 250px; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--sage); }
+    .hero-image { background: rgba(255,255,255,0.3); height: 280px; border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: none; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 20px; }
     @media (max-width: 768px) { .hero-container { grid-template-columns: 1fr; text-align: center; } }
     
-    /* Products */
+    .category-header { text-align: center; margin: 3rem 0 1.5rem; }
+    .category-header h2 { font-size: 2.2rem; color: var(--evergreen); display: inline-block; padding: 0 2rem; border-bottom: 4px solid var(--terracotta); padding-bottom: 0.5rem; }
+    .category-header p { color: var(--sage); margin-top: 0.5rem; font-size: 1.1rem; }
+    
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; }
-    .products-section { padding: 2rem 0; }
-    .section-header { text-align: center; margin-bottom: 2rem; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s; cursor: pointer; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s; display: flex; flex-direction: column; }
     .product-card:hover { transform: translateY(-5px); }
-    .product-image { height: 220px; background: var(--sage); opacity: 0.4; display: flex; align-items: center; justify-content: center; font-style: italic; }
-    .product-info { padding: 1.5rem; }
+    .product-image { height: 220px; background: var(--sage); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.12); transition: transform 0.3s; }
+    .product-card:hover .product-image img { transform: scale(1.18); }
+    .product-info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
     .product-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--evergreen); margin-bottom: 0.25rem; }
-    .product-size { font-size: 0.8rem; color: var(--sage); margin-bottom: 0.75rem; }
-    .product-description { font-size: 0.9rem; color: var(--dark-evergreen); margin-bottom: 1rem; line-height: 1.5; }
+    .product-sub { font-size: 0.8rem; color: var(--sage); margin-bottom: 0.5rem; letter-spacing: 0.5px; }
+    .product-description { font-size: 0.9rem; color: var(--dark-evergreen); margin-bottom: 0.8rem; line-height: 1.5; flex: 1; }
+    
+    .scent-selector { margin-bottom: 0.8rem; }
+    .scent-selector label { display: block; font-size: 0.8rem; color: var(--sage); margin-bottom: 0.3rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .scent-select { width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid var(--sage); border-radius: 10px; background: white; font-family: 'Source Sans Pro', sans-serif; font-size: 0.95rem; color: var(--dark-evergreen); cursor: pointer; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2368756D'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.7rem center; background-size: 1.2rem; padding-right: 2.2rem; }
+    .scent-select:hover, .scent-select:focus { border-color: var(--terracotta); }
+    .scent-select.error { border-color: #c0392b; background-color: #fdf3f2; }
+    
     .product-price { font-size: 1.2rem; font-weight: 600; color: var(--terracotta); margin-bottom: 1rem; }
-    .btn-add-to-cart { background: transparent; border: 2px solid var(--terracotta); color: var(--terracotta); font-weight: 600; padding: 0.7rem; border-radius: 50px; width: 100%; cursor: pointer; transition: all 0.2s; }
+    .btn-add-to-cart { background: transparent; border: 2px solid var(--terracotta); color: var(--terracotta); font-weight: 600; padding: 0.7rem; border-radius: 50px; width: 100%; cursor: pointer; transition: all 0.2s; margin-top: auto; }
     .btn-add-to-cart:hover { background: var(--terracotta); color: white; }
     
-    /* Coming Soon */
-    .coming-soon { background: linear-gradient(135deg, var(--evergreen), var(--sage)); color: white; text-align: center; padding: 1.5rem; border-radius: 15px; margin: 2rem 0; position: relative; overflow: hidden; }
-    .coming-soon::before { content: "MOYANA"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; font-weight: 700; color: white; opacity: 0.1; white-space: nowrap; }
-    .coming-soon h3 { color: white; position: relative; z-index: 2; font-size: 1.4rem; }
+    .bundle-promo { background: linear-gradient(135deg, #e8f2e5, #f0f7ed); border: 1px solid var(--sage); border-radius: 15px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+    .bundle-promo h3 { color: var(--evergreen); margin-bottom: 0.5rem; font-size: 1.4rem; }
+    .bundle-promo p { color: var(--dark-evergreen); margin-bottom: 0; font-size: 1rem; }
+    .bundle-promo strong { color: var(--terracotta); font-size: 1.1rem; }
     
-    /* Ritual Section */
+    /* Curated Intentions */
+    .curated-section { background: linear-gradient(180deg, var(--ivory) 0%, #f8f4ec 100%); padding: 3rem 1rem; }
+    .curated-intro { max-width: 800px; margin: 0 auto 2.5rem; text-align: center; }
+    .curated-intro p { color: var(--dark-evergreen); font-size: 1.05rem; }
+    .curated-intro .verse { font-family: 'Playfair Display', serif; font-style: italic; color: var(--terracotta); margin-top: 1rem; font-size: 1.1rem; }
+    
+    .curated-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+    .curated-card { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.06); border-top: 5px solid var(--terracotta); display: flex; flex-direction: column; }
+    .curated-card h3 { color: var(--evergreen); font-size: 1.4rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .curated-card h3 i { color: var(--terracotta); font-size: 1.3rem; }
+    .curated-card .price-tag { font-size: 1.6rem; font-weight: 700; color: var(--terracotta); margin: 0.5rem 0 1rem; }
+    .curated-card .price-tag span { font-size: 0.85rem; color: var(--sage); font-weight: 400; }
+    .curated-card p { font-size: 0.95rem; color: var(--dark-evergreen); margin-bottom: 0.8rem; line-height: 1.55; }
+    .curated-card ul { font-size: 0.9rem; color: var(--dark-evergreen); padding-left: 1.2rem; margin-bottom: 1.2rem; }
+    .curated-card ul li { margin-bottom: 0.35rem; }
+    .curated-card .btn-add-to-cart { margin-top: auto; }
+    
+    /* Inline fields inside curated cards */
+    .inline-field { margin-bottom: 0.9rem; }
+    .inline-field label { display: block; font-size: 0.8rem; color: var(--sage); margin-bottom: 0.3rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .inline-field textarea, .inline-field input, .inline-field select {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border: 1.5px solid var(--sage);
+      border-radius: 10px;
+      background: white;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 0.93rem;
+      color: var(--dark-evergreen);
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .inline-field textarea { min-height: 100px; }
+    .inline-field textarea:focus, .inline-field input:focus, .inline-field select:focus { border-color: var(--terracotta); }
+    .inline-field textarea.error, .inline-field input.error { border-color: #c0392b; background: #fdf3f2; }
+    .inline-hint { font-size: 0.78rem; color: var(--sage); font-style: italic; margin-bottom: 0.6rem; display: block; }
+    
+    /* Expandable consultation details */
+    .expand-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: #f8f4ec;
+      border: 1.5px dashed var(--sage);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--evergreen);
+      cursor: pointer;
+      margin-bottom: 0.9rem;
+      transition: all 0.2s;
+    }
+    .expand-toggle:hover { background: #f0eade; border-color: var(--terracotta); color: var(--terracotta); }
+    .expand-toggle i.chevron { transition: transform 0.25s; }
+    .expand-toggle.open i.chevron { transform: rotate(180deg); }
+    .expand-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .expand-content.open { max-height: 500px; }
+    .expand-content-inner { padding-top: 0.3rem; }
+    
+    .scent-guide { background: var(--ivory); padding: 3rem 1rem; }
+    .scent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 1280px; margin: 2rem auto 0; }
+    .scent-card { background: white; padding: 1.5rem; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 4px solid var(--terracotta); }
+    .scent-card h4 { font-family: 'Playfair Display', serif; color: var(--evergreen); font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .scent-card p { font-size: 0.88rem; color: var(--dark-evergreen); line-height: 1.5; }
+    .scent-card .new-tag { display: inline-block; background: var(--terracotta); color: white; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 20px; margin-left: 0.3rem; vertical-align: middle; letter-spacing: 0.5px; }
+    
+    .coming-soon { background: linear-gradient(135deg, var(--evergreen), var(--sage)); color: white; text-align: center; padding: 1.5rem; border-radius: 15px; margin: 2rem 0; position: relative; overflow: hidden; }
+    .coming-soon::before { content: "MOYANA"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; font-weight: 700; color: white; opacity: 0.1; white-space: nowrap; border: none; }
+    .coming-soon h3 { color: white; position: relative; z-index: 2; font-size: 1.4rem; }
+    .coming-soon p { position: relative; z-index: 2; }
+    
     .ritual-section { background: var(--sage); padding: 3rem 1rem; margin: 2rem 0; position: relative; text-align: center; }
     .elements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
     .element h4 { font-family: 'Playfair Display', serif; color: white; font-size: 1.3rem; }
     .element p { color: white; opacity: 0.8; }
     .ritual-text { color: white; max-width: 800px; margin: 2rem auto 0; }
     
-    /* About Section */
     .about-section { padding: 3rem 0; }
     .about-container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
     .about-quote { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--terracotta); font-style: italic; margin-top: 1.5rem; border-left: 4px solid var(--terracotta); padding-left: 1rem; }
-    .about-image { background: var(--blush); height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+    .about-image { background: var(--blush); height: 350px; border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .about-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 20px; }
     @media (max-width: 768px) { .about-container { grid-template-columns: 1fr; } .about-image { order: -1; } }
     
-    /* Testimonials */
     .testimonials { background: var(--blush); padding: 3rem 1rem; text-align: center; }
     .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1280px; margin: 0 auto; }
     .testimonial-card { background: white; padding: 1.5rem; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
     .testimonial-text { font-style: italic; margin-bottom: 1rem; }
     .testimonial-author { font-weight: 600; color: var(--evergreen); }
     
-    /* Newsletter */
     .newsletter { background: var(--blush); padding: 3rem 1rem; text-align: center; }
     .newsletter-container { max-width: 600px; margin: 0 auto; }
     .newsletter-form { display: flex; gap: 0.8rem; max-width: 500px; margin: 0 auto; }
-    .newsletter-input { flex: 1; padding: 0.8rem; border: 1px solid var(--sage); border-radius: 50px; }
+    .newsletter-input { flex: 1; padding: 0.8rem; border: 1px solid var(--sage); border-radius: 50px; font-family: 'Source Sans Pro', sans-serif; }
     .newsletter-btn { background: var(--terracotta); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 600; cursor: pointer; }
+    .newsletter-message { margin-top: 1rem; font-size: 0.9rem; display: none; padding: 0.5rem; border-radius: 10px; }
+    .newsletter-message.success { background: var(--evergreen); color: white; display: block; }
+    .newsletter-message.error { background: var(--terracotta); color: white; display: block; }
     @media (max-width: 500px) { .newsletter-form { flex-direction: column; } }
     
-    /* Footer */
     .footer { background: var(--evergreen); color: white; padding: 3rem 1rem 2rem; }
     .footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
     .footer-logo .logo-main { color: white; font-size: 1.8rem; }
@@ -123,33 +203,33 @@
     .social-links a:hover { color: var(--terracotta); }
     .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
     
-    /* Cart Drawer */
     .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(3px); z-index: 200; opacity: 0; visibility: hidden; transition: all 0.3s; }
     .cart-overlay.active { opacity: 1; visibility: visible; }
     .cart-drawer { position: fixed; top: 0; right: -450px; width: 90%; max-width: 420px; height: 100vh; background: white; z-index: 201; padding: 1.5rem; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.1); overflow-y: auto; }
     .cart-drawer.open { right: 0; }
     .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--blush); }
     .close-cart { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--sage); }
-    .cart-items { max-height: 40vh; overflow-y: auto; margin-bottom: 1rem; }
+    .cart-items { max-height: 35vh; overflow-y: auto; margin-bottom: 1rem; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--blush); }
     .cart-item-details h4 { color: var(--evergreen); font-size: 1rem; margin-bottom: 0.3rem; }
+    .cart-item-scent { font-size: 0.8rem; color: var(--sage); margin-bottom: 0.2rem; font-style: italic; }
+    .cart-item-extra { font-size: 0.78rem; color: var(--sage); margin-top: 0.3rem; line-height: 1.4; background: #f8f4ec; padding: 0.4rem 0.6rem; border-radius: 8px; max-height: 100px; overflow-y: auto; white-space: pre-wrap; }
     .cart-item-price { color: var(--terracotta); font-weight: 600; font-size: 0.9rem; }
     .cart-item-actions button { background: none; border: 1px solid var(--sage); border-radius: 50%; width: 28px; height: 28px; cursor: pointer; margin-left: 0.5rem; transition: all 0.2s; }
     .cart-item-actions button:hover { background: var(--terracotta); border-color: var(--terracotta); color: white; }
     .cart-total { font-size: 1.2rem; font-weight: 600; margin: 1rem 0; padding-top: 1rem; border-top: 2px solid var(--blush); display: flex; justify-content: space-between; }
-    .btn-checkout { background: var(--terracotta); color: white; border: none; padding: 0.8rem; width: 100%; border-radius: 50px; font-weight: 600; cursor: pointer; margin-bottom: 0.5rem; transition: background 0.2s; }
+    .btn-checkout { background: var(--terracotta); color: white; border: none; padding: 0.8rem; width: 100%; border-radius: 50px; font-weight: 600; cursor: pointer; margin-bottom: 0.5rem; }
     .btn-checkout:hover { background: #9f6854; }
     .checkout-form { margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--blush); display: none; }
     .checkout-form.active { display: block; }
     .checkout-form input { width: 100%; padding: 0.8rem; margin-bottom: 0.8rem; border: 1px solid var(--sage); border-radius: 10px; font-family: 'Source Sans Pro', sans-serif; }
     .order-summary { background: var(--blush); padding: 1rem; border-radius: 10px; margin: 1rem 0; font-size: 0.9rem; }
-    .payment-options { display: flex; gap: 1rem; margin: 1rem 0; }
-    .payment-btn { flex: 1; background: white; border: 2px solid var(--sage); border-radius: 10px; padding: 0.8rem; cursor: pointer; transition: all 0.2s; text-align: center; }
-    .payment-btn:hover { border-color: var(--terracotta); background: var(--blush); }
-    .payment-btn.active { border-color: var(--terracotta); background: var(--terracotta); color: white; }
-    .payment-btn i { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
-    .notification { position: fixed; bottom: 20px; right: 20px; background: var(--evergreen); color: white; padding: 1rem 2rem; border-radius: 50px; z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .notification { position: fixed; bottom: 20px; right: 20px; background: var(--evergreen); color: white; padding: 1rem 2rem; border-radius: 50px; z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none; max-width: 90%; }
     .notification.show { opacity: 1; }
+    .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 400; display: none; justify-content: center; align-items: center; flex-direction: column; color: white; }
+    .loading-overlay.active { display: flex; }
+    .spinner { width: 50px; height: 50px; border: 4px solid var(--white); border-top-color: var(--terracotta); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -163,12 +243,14 @@
     </div>
     <div class="nav-links">
       <a href="#home">Home</a>
-      <a href="#products">Candles</a>
-      <a href="#coming-soon">Incense <span style="color: var(--terracotta); font-size: 0.8rem;">(Soon)</span></a>
+      <a href="#fire">Candles</a>
+      <a href="#refills">Refills</a>
+      <a href="#air">Bath Teas</a>
+      <a href="#curated">Curated Intentions</a>
+      <a href="#water">Water (Soon)</a>
+      <a href="#earth">Earth (Soon)</a>
       <a href="#about">Our Story</a>
-      <a href="#ritual">Ritual</a>
-      <a href="#contact">Contact</a>
-      <button class="btn-shop">Shop</button>
+      <button class="btn-shop" onclick="document.getElementById('fire').scrollIntoView({behavior:'smooth'})">Shop</button>
     </div>
     <div class="cart-icon" id="cartToggle">
       <i class="fas fa-shopping-bag"></i>
@@ -177,74 +259,384 @@
   </div>
 </header>
 
-<!-- ==================== HERO SECTION ==================== -->
+<!-- ==================== HERO ==================== -->
 <section class="hero" id="home">
   <div class="hero-container">
     <div class="hero-content">
       <h1>Handcrafted Ritual Candles</h1>
       <p>Inspired by Earth, Air, Fire & Water</p>
-      <button class="hero-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop the Ritual Collection</button>
+      <button class="hero-btn" onclick="document.getElementById('fire').scrollIntoView({behavior:'smooth'})">Explore the Fire Range</button>
     </div>
     <div class="hero-image">
-      <p>[Your candle photography here]</p>
+      <img src="images/moyana logo.jpg" alt="Moyana ritual candles">
     </div>
   </div>
 </section>
 
-<!-- ==================== PRODUCT SECTION ==================== -->
-<section class="products-section" id="products">
+<!-- ==================== FIRE RANGE ==================== -->
+<section id="fire" style="padding-top: 2rem; background: var(--ivory);">
   <div class="container">
-    <div class="section-header">
-      <h2>Our Ritual Candles</h2>
-      <p>Handcrafted with intention, using carefully selected herbs and natural elements</p>
-    </div>
-    <div class="product-grid">
-      <div class="product-card" data-id="1" data-name="Neroli" data-price="28.99">
-        <div class="product-image"><p>[Neroli candle photo]</p></div>
-        <div class="product-info">
-          <div class="product-name">Neroli</div>
-          <div class="product-size">200ml</div>
-          <div class="product-description">A fresh, radiant blend of citrus and delicate blossoms. Clears the mind and restores balance.</div>
-          <div class="product-price">$28.99</div>
-          <button class="btn-add-to-cart" data-id="1" data-name="Neroli" data-price="28.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
-        </div>
-      </div>
-      <div class="product-card" data-id="2" data-name="Tropical Escape" data-price="32.99">
-        <div class="product-image"><p>[Tropical Escape candle photo]</p></div>
-        <div class="product-info">
-          <div class="product-name">Tropical Escape</div>
-          <div class="product-size">200ml</div>
-          <div class="product-description">A warm blend of creamy coconut and tropical florals with vanilla. Soothes the heart.</div>
-          <div class="product-price">$32.99</div>
-          <button class="btn-add-to-cart" data-id="2" data-name="Tropical Escape" data-price="32.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
-        </div>
-      </div>
-      <div class="product-card" data-id="3" data-name="Rosemary and Sage" data-price="29.99">
-        <div class="product-image"><p>[Rosemary & Sage candle photo]</p></div>
-        <div class="product-info">
-          <div class="product-name">Rosemary and Sage</div>
-          <div class="product-size">200ml</div>
-          <div class="product-description">A crisp herbal infusion of rosemary and sage. Cleanses energy and sharpens clarity.</div>
-          <div class="product-price">$29.99</div>
-          <button class="btn-add-to-cart" data-id="3" data-name="Rosemary and Sage" data-price="29.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
-        </div>
-      </div>
-      <div class="product-card" data-id="4" data-name="Mpepho" data-price="34.99">
-        <div class="product-image"><p>[Mpepho candle photo]</p></div>
-        <div class="product-info">
-          <div class="product-name">Mpepho</div>
-          <div class="product-size">200ml</div>
-          <div class="product-description">Sacred ancestral candle with earthy smoke. Connects physical and spiritual realms.</div>
-          <div class="product-price">$34.99</div>
-          <button class="btn-add-to-cart" data-id="4" data-name="Mpepho" data-price="34.99"><i class="fas fa-plus-circle"></i> Add to cart</button>
-        </div>
-      </div>
+    <div class="category-header">
+      <h2>🔥 Fire Range – Ritual Candles</h2>
+      <p>Each candle is infused with intention and available in five sacred scents.</p>
     </div>
 
-    <div class="coming-soon" id="coming-soon">
-      <h3>Incense Sticks & Cones</h3>
-      <p>Coming soon • Launching shortly</p>
-      <p style="margin-top: 0.5rem;">Be the first to know when we launch</p>
+    <div class="bundle-promo">
+      <h3>🎁 Ritual Bundle Offer</h3>
+      <p>Add any <strong>3 ritual candles</strong> to your cart and automatically save <strong>R90</strong>!</p>
+      <p style="font-size: 0.9rem; color: var(--sage); margin-top: 0.5rem;">Mix & match Coceka, Gcina, Lathitha, and Mpepho.</p>
+    </div>
+
+    <div class="product-grid">
+      <!-- Coceka -->
+      <div class="product-card" data-id="10" data-name="Coceka" data-price="480.00" data-has-scent="true">
+        <div class="product-image">
+          <img src="images/Moyana- Coceka Candle.png" alt="Coceka candle" onerror="this.parentElement.innerHTML='<p>[Coceka image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Coceka</div>
+          <div class="product-sub">isiXhosa: “Cleanse / Purify”</div>
+          <div class="product-description">A candle created to spiritually cleanse and purify your space, helping to release negative and stagnant energy, low vibrational entities and emotional heaviness.</div>
+          <div class="scent-selector">
+            <label for="scent-10">Choose your scent:</label>
+            <select id="scent-10" class="scent-select" required>
+              <option value="">— Select a scent —</option>
+              <option value="Neroli">Neroli</option>
+              <option value="Tropical Escape">Tropical Escape</option>
+              <option value="Rosemary &amp; Sage">Rosemary &amp; Sage</option>
+              <option value="Soft Aura">Soft Aura</option>
+              <option value="Be Still">Be Still</option>
+            </select>
+          </div>
+          <div class="product-price">R480.00</div>
+          <button class="btn-add-to-cart" data-id="10" data-name="Coceka" data-price="480.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+
+      <!-- Gcina -->
+      <div class="product-card" data-id="11" data-name="Gcina" data-price="480.00" data-has-scent="true">
+        <div class="product-image">
+          <img src="images/Moyana - Gcina candle.png" alt="Gcina candle" onerror="this.parentElement.innerHTML='<p>[Gcina image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Gcina</div>
+          <div class="product-sub">isiXhosa: “Protect / Preserve / Keep safe”</div>
+          <div class="product-description">A candle crafted for spiritual protection and energetic maintenance, designed to keep your space cleansed, grounded, and shielded from unwanted energies.</div>
+          <div class="scent-selector">
+            <label for="scent-11">Choose your scent:</label>
+            <select id="scent-11" class="scent-select" required>
+              <option value="">— Select a scent —</option>
+              <option value="Neroli">Neroli</option>
+              <option value="Tropical Escape">Tropical Escape</option>
+              <option value="Rosemary &amp; Sage">Rosemary &amp; Sage</option>
+              <option value="Soft Aura">Soft Aura</option>
+              <option value="Be Still">Be Still</option>
+            </select>
+          </div>
+          <div class="product-price">R480.00</div>
+          <button class="btn-add-to-cart" data-id="11" data-name="Gcina" data-price="480.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+
+      <!-- Lathitha -->
+      <div class="product-card" data-id="12" data-name="Lathitha" data-price="480.00" data-has-scent="true">
+        <div class="product-image">
+          <img src="images/Moyana - Lathitha Candle.png" alt="Lathitha candle" onerror="this.parentElement.innerHTML='<p>[Lathitha image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Lathitha</div>
+          <div class="product-sub">isiXhosa: “Bring light / Illuminate / Shine upon”</div>
+          <div class="product-description">A candle created to attract luck, prosperity, abundance, and positive energy into your life and space.</div>
+          <div class="scent-selector">
+            <label for="scent-12">Choose your scent:</label>
+            <select id="scent-12" class="scent-select" required>
+              <option value="">— Select a scent —</option>
+              <option value="Neroli">Neroli</option>
+              <option value="Tropical Escape">Tropical Escape</option>
+              <option value="Rosemary &amp; Sage">Rosemary &amp; Sage</option>
+              <option value="Soft Aura">Soft Aura</option>
+              <option value="Be Still">Be Still</option>
+            </select>
+          </div>
+          <div class="product-price">R480.00</div>
+          <button class="btn-add-to-cart" data-id="12" data-name="Lathitha" data-price="480.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+
+      <!-- Mpepho -->
+      <div class="product-card" data-id="4" data-name="Mpepho" data-price="480.00" data-has-scent="false">
+        <div class="product-image">
+          <img src="images/Moyana - Mpepho Candle.png" alt="Mpepho candle" onerror="this.parentElement.innerHTML='<p>[Mpepho image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Mpepho</div>
+          <div class="product-sub">Sacred Ancestral Candle</div>
+          <div class="product-description">This sacred candle honours the tradition of burning mpepho, carrying a soft, earthy smoke that connects the physical and spiritual realms.</div>
+          <div class="product-scents">🌿 Earthy, traditional – no added fragrance</div>
+          <div class="product-price">R480.00</div>
+          <button class="btn-add-to-cart" data-id="4" data-name="Mpepho" data-price="480.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== REFILLS ==================== -->
+<section id="refills" style="padding-top: 2rem; background: var(--ivory);">
+  <div class="container">
+    <div class="category-header">
+      <h2>♻️ Fire Range – Candle Refills</h2>
+      <p>Same sacred intention, same fragrances — a fresh pour for your ritual jar.</p>
+    </div>
+
+    <div style="max-width: 780px; margin: 0 auto 2rem; background: #f8f4ec; border-left: 4px solid var(--terracotta); padding: 1rem 1.3rem; border-radius: 10px; font-size: 0.92rem; color: var(--dark-evergreen);">
+      <strong>🌿 How refills work:</strong> Your refill comes as a pre‑poured mould, packaged and couriered to you. Upon receipt, simply melt the candle and pour it into your existing Moyana jar at home.
+      <br><br>
+      <em>Please note: Courier fee is excluded from the refill price.</em>
+    </div>
+
+    <div class="product-grid">
+      <!-- Coceka Refill -->
+      <div class="product-card" data-id="20" data-name="Coceka Refill" data-price="370.00" data-has-scent="true">
+        <div class="product-image">
+          <img src="images/refills.png" alt="Coceka Refill" onerror="this.parentElement.innerHTML='<p>[Coceka refill image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Coceka Refill</div>
+          <div class="product-sub">isiXhosa: “Cleanse / Purify” – refill</div>
+          <div class="product-description">A fresh pour of the Coceka ritual. Simply melt and pour into your existing Moyana jar.</div>
+          <div class="scent-selector">
+            <label for="scent-20">Choose your scent:</label>
+            <select id="scent-20" class="scent-select" required>
+              <option value="">— Select a scent —</option>
+              <option value="Neroli">Neroli</option>
+              <option value="Tropical Escape">Tropical Escape</option>
+              <option value="Rosemary &amp; Sage">Rosemary &amp; Sage</option>
+              <option value="Soft Aura">Soft Aura</option>
+              <option value="Be Still">Be Still</option>
+            </select>
+          </div>
+          <div class="product-price">R370.00</div>
+          <button class="btn-add-to-cart" data-id="20" data-name="Coceka Refill" data-price="370.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+
+      <!-- Gcina Refill -->
+      <div class="product-card" data-id="21" data-name="Gcina Refill" data-price="370.00" data-has-scent="true">
+        <div class="product-image">
+          <img src="images/refills.png" alt="Gcina Refill" onerror="this.parentElement.innerHTML='<p>[Gcina refill image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Gcina Refill</div>
+          <div class="product-sub">isiXhosa: “Protect / Keep safe” – refill</div>
+          <div class="product-description">A fresh pour of the Gcina ritual. Simply melt and pour into your existing Moyana jar.</div>
+          <div class="scent-selector">
+            <label for="scent-21">Choose your scent:</label>
+            <select id="scent-21" class="scent-select" required>
+              <option value="">— Select a scent —</option>
+              <option value="Neroli">Neroli</option>
+              <option value="Tropical Escape">Tropical Escape</option>
+              <option value="Rosemary &amp; Sage">Rosemary &amp; Sage</option>
+              <option value="Soft Aura">Soft Aura</option>
+              <option value="Be Still">Be Still</option>
+            </select>
+          </div>
+          <div class="product-price">R370.00</div>
+          <button class="btn-add-to-cart" data-id="21" data-name="Gcina Refill" data-price="370.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+
+      <!-- Lathitha Refill -->
+      <div class="product-card" data-id="22" data-name="Lathitha Refill" data-price="370.00" data-has-scent="true">
+        <div class="product-image">
+          <img src="images/refills.png" alt="Lathitha Refill" onerror="this.parentElement.innerHTML='<p>[Lathitha refill image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Lathitha Refill</div>
+          <div class="product-sub">isiXhosa: “Bring light / Illuminate” – refill</div>
+          <div class="product-description">A fresh pour of the Lathitha ritual. Simply melt and pour into your existing Moyana jar.</div>
+          <div class="scent-selector">
+            <label for="scent-22">Choose your scent:</label>
+            <select id="scent-22" class="scent-select" required>
+              <option value="">— Select a scent —</option>
+              <option value="Neroli">Neroli</option>
+              <option value="Tropical Escape">Tropical Escape</option>
+              <option value="Rosemary &amp; Sage">Rosemary &amp; Sage</option>
+              <option value="Soft Aura">Soft Aura</option>
+              <option value="Be Still">Be Still</option>
+            </select>
+          </div>
+          <div class="product-price">R370.00</div>
+          <button class="btn-add-to-cart" data-id="22" data-name="Lathitha Refill" data-price="370.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+
+      <!-- Mpepho Refill -->
+      <div class="product-card" data-id="23" data-name="Mpepho Refill" data-price="370.00" data-has-scent="false">
+        <div class="product-image">
+          <img src="images/refills.png" alt="Mpepho Refill" onerror="this.parentElement.innerHTML='<p>[Mpepho refill image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Mpepho Refill</div>
+          <div class="product-sub">Sacred Ancestral Candle – refill</div>
+          <div class="product-description">A fresh pour of the sacred Mpepho candle. Simply melt and pour into your existing Moyana jar.</div>
+          <div class="product-scents">🌿 Earthy, traditional – no added fragrance</div>
+          <div class="product-price">R370.00</div>
+          <button class="btn-add-to-cart" data-id="23" data-name="Mpepho Refill" data-price="370.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== AIR RANGE – BATH TEAS ==================== -->
+<section id="air" style="padding-top: 2rem; background: var(--ivory);">
+  <div class="container">
+    <div class="category-header">
+      <h2>🌬️ Air Range – Bath Tea Rituals</h2>
+      <p>Cleanse your body and spirit with our herbal bath teas.</p>
+    </div>
+
+    <div class="bundle-promo">
+      <h3>🎁 Bath Tea Bundle Offer</h3>
+      <p>Add <strong>3 bath teas</strong> to your cart and automatically save <strong>R50</strong>!</p>
+      <p style="font-size: 0.9rem; color: var(--sage); margin-top: 0.5rem;">The discount applies automatically at checkout.</p>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card" data-id="15" data-name="Bath Tea Ritual" data-price="150.00" data-has-scent="false">
+        <div class="product-image">
+          <img src="images/bath-tea.jpg" alt="Bath Tea Ritual" onerror="this.parentElement.innerHTML='<p>[Bath Tea image]</p>'">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Bath Tea Ritual</div>
+          <div class="product-sub">Single tea bag</div>
+          <div class="product-description">A handcrafted blend of herbs and salts to cleanse your aura, calm your mind, and prepare your spirit for ritual.</div>
+          <div class="product-price">R150.00</div>
+          <button class="btn-add-to-cart" data-id="15" data-name="Bath Tea Ritual" data-price="150.00"><i class="fas fa-plus-circle"></i> Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CURATED INTENTIONS ==================== -->
+<section id="curated" class="curated-section">
+  <div class="container">
+    <div class="category-header">
+      <h2>🕯️ Curated Intentions</h2>
+      <p>A personalised, custom service during the candle making process.</p>
+    </div>
+
+    <div class="curated-intro">
+      <p>Our ritual candles are more than products — they are vessels of intention. With our Curated Intentions services, you invite us into your sacred space, allowing us to personalise the prayers and intentions spoken over your products during the creation and production phase.</p>
+      <p class="verse">“Your intentions, held in prayer, woven into every pour.”</p>
+    </div>
+
+    <div class="curated-grid">
+      <!-- Personalised Intentions – with inline textarea -->
+      <div class="curated-card">
+        <h3><i class="fas fa-scroll"></i> Personalised Intentions</h3>
+        <div class="price-tag">R50.00 <span>per order</span></div>
+        <p>Write up to <strong>three bullet points</strong> describing what you are looking to achieve with your ordered products. Your intentions will be honoured and prayed over each item during production.</p>
+        <span class="inline-hint">e.g. “Coceka candle – Want to access my dreams again.” / “Praying for a peaceful home.” / “Praying to remove spiritual blockages.”</span>
+
+        <div class="inline-field">
+          <label for="intentionsText">Your intentions:</label>
+          <textarea id="intentionsText" placeholder="Write your 3 intentions here…"></textarea>
+        </div>
+
+        <button class="btn-add-to-cart" id="addIntentionsBtn"><i class="fas fa-plus-circle"></i> Add to cart</button>
+      </div>
+
+      <!-- Consultation – with expandable details -->
+      <div class="curated-card">
+        <h3><i class="fas fa-phone-volume"></i> 30-min Telephonic Consultation</h3>
+        <div class="price-tag">R150.00 <span>per order</span></div>
+        <p>A 30‑minute telephonic consultation where we have a deeper discussion about your spiritual challenges or the energetic goals you would like to achieve.</p>
+        <p>Together we align your intentions so that every prayer and every pour is rooted in your specific journey.</p>
+        <ul>
+          <li>Deep dive into your energetic goals</li>
+          <li>Personal prayer alignment</li>
+          <li>Scheduled at a time convenient to you</li>
+        </ul>
+
+        <button type="button" class="expand-toggle" id="consultToggle">
+          <span><i class="fas fa-edit"></i> Add your details (optional)</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </button>
+        <div class="expand-content" id="consultContent">
+          <div class="expand-content-inner">
+            <div class="inline-field">
+              <label for="consultTime">Preferred date &amp; time:</label>
+              <input type="text" id="consultTime" placeholder="e.g. Weekday evenings after 6pm">
+            </div>
+            <div class="inline-field">
+              <label for="consultPhone">Best contact number:</label>
+              <input type="tel" id="consultPhone" placeholder="e.g. 068 018 4565">
+            </div>
+            <div class="inline-field">
+              <label for="consultNotes">Anything you'd like us to know before we call?</label>
+              <textarea id="consultNotes" placeholder="Share a brief context, so we can prepare…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-add-to-cart" id="addConsultBtn"><i class="fas fa-plus-circle"></i> Add to cart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCENT GUIDE ==================== -->
+<section class="scent-guide" id="scents">
+  <div class="category-header">
+    <h2>🌿 Scent Guide</h2>
+    <p>Each ritual candle and refill is available in one of our five sacred scents.</p>
+  </div>
+  <div class="scent-grid">
+    <div class="scent-card">
+      <h4>Neroli</h4>
+      <p>A fresh, radiant blend of citrus and delicate blossoms, gently unfolding into soft floral warmth. Clears the mind, lightens the spirit, and restores balance.</p>
+    </div>
+    <div class="scent-card">
+      <h4>Tropical Escape</h4>
+      <p>A warm, enveloping blend of creamy coconut and soft tropical florals, layered with gentle vanilla. Soothes the heart and invites deep emotional calm.</p>
+    </div>
+    <div class="scent-card">
+      <h4>Rosemary &amp; Sage</h4>
+      <p>A crisp, herbal infusion of rosemary and sage, crafted to cleanse energy and sharpen clarity. Supports release, focus, and spiritual alignment.</p>
+    </div>
+    <div class="scent-card">
+      <h4>Soft Aura <span class="new-tag">NEW</span></h4>
+      <p>A fresh fruity-floral fragrance opening with vibrant notes of peach, cherry blossom, red apple, cranberry, and grapefruit. Warm base notes leave a sensual, comforting finish.</p>
+    </div>
+    <div class="scent-card">
+      <h4>Be Still <span class="new-tag">NEW</span></h4>
+      <p>A serene aquatic blend created to invite stillness into your space. Crisp marine notes and cool mint meet soft lavender, delicate florals, and grounding woods — creating calm, clarity, and quiet reflection.</p>
+    </div>
+    <div class="scent-card" style="border-left-color: var(--evergreen);">
+      <h4>Mpepho (Traditional)</h4>
+      <p>The Mpepho candle carries a soft, earthy smoke reminiscent of traditional mpepho — connecting the physical and spiritual realms. No added fragrance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WATER & EARTH (Coming Soon) ==================== -->
+<section id="water" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="coming-soon">
+      <h3>💧 Water Range – Coming Soon</h3>
+      <p>Bath bombs infused with intention – launching in the coming months.</p>
+    </div>
+  </div>
+</section>
+
+<section id="earth" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="coming-soon" style="background: var(--evergreen);">
+      <h3>🌍 Earth Range – Coming Soon</h3>
+      <p>Incense sticks and cones – a grounded companion to your ritual.</p>
     </div>
   </div>
 </section>
@@ -254,16 +646,16 @@
   <div class="ritual-container">
     <h2>The Four Elements Ritual</h2>
     <div class="elements-grid">
-      <div class="element"><h4>Earth</h4><p>Grounding & stability</p></div>
-      <div class="element"><h4>Air</h4><p>Clarity & intention</p></div>
-      <div class="element"><h4>Fire</h4><p>Transformation & energy</p></div>
-      <div class="element"><h4>Water</h4><p>Cleansing & flow</p></div>
+      <div class="element"><h4>🌍 Earth</h4><p>Grounding & stability – Incense (Coming Soon)</p></div>
+      <div class="element"><h4>💨 Air</h4><p>Clarity & intention – Bath Teas</p></div>
+      <div class="element"><h4>🔥 Fire</h4><p>Transformation & energy – Candles & Refills</p></div>
+      <div class="element"><h4>💧 Water</h4><p>Cleansing & flow – Bath Bombs (Coming Soon)</p></div>
     </div>
     <p class="ritual-text">Together, these elements form the foundation of our philosophy — bringing harmony, purification, and balance into everyday living.</p>
   </div>
 </section>
 
-<!-- ==================== ABOUT SECTION ==================== -->
+<!-- ==================== ABOUT ==================== -->
 <section class="about-section" id="about">
   <div class="about-container">
     <div class="about-content">
@@ -277,7 +669,9 @@
         Return to yourself.
       </div>
     </div>
-    <div class="about-image"><p>[brand imagery here]</p></div>
+    <div class="about-image">
+      <img src="images/table.jpg" alt="Moyana brand story">
+    </div>
   </div>
 </section>
 
@@ -285,7 +679,7 @@
 <section class="testimonials">
   <h2>From Our Community</h2>
   <div class="testimonial-grid">
-    <div class="testimonial-card"><p class="testimonial-text">"The Neroli candle clears my mind every morning. It's become my favorite ritual."</p><p class="testimonial-author">— Sarah K.</p></div>
+    <div class="testimonial-card"><p class="testimonial-text">"The Coceka candle clears my mind every morning. It's become my favorite ritual."</p><p class="testimonial-author">— Sarah K.</p></div>
     <div class="testimonial-card"><p class="testimonial-text">"Beautiful energy. You can feel the intention in every candle."</p><p class="testimonial-author">— Michael O.</p></div>
     <div class="testimonial-card"><p class="testimonial-text">"Finally found candles that align with my spiritual practice. The Mpepho candle is so special."</p><p class="testimonial-author">— Thandi M.</p></div>
   </div>
@@ -295,12 +689,15 @@
 <section class="newsletter">
   <div class="newsletter-container">
     <h3>Join Our Ritual</h3>
-    <p>Subscribe to be the first to know about new collections, including our upcoming incense range.</p>
-    <form class="newsletter-form" id="newsletterForm">
-      <input type="email" id="newsletterEmail" placeholder="Your email" class="newsletter-input" required>
+    <p>Subscribe to be the first to know about new collections, including our upcoming ranges.</p>
+    <form class="newsletter-form" id="newsletterForm" action="https://formspree.io/f/mjgpqeqz" method="POST">
+      <input type="email" name="email" id="newsletterEmail" placeholder="Your email address" class="newsletter-input" required>
+      <input type="text" name="_gotcha" style="display:none">
+      <input type="hidden" name="_subject" value="New Moyana Newsletter Subscriber">
+      <input type="hidden" name="_redirect" value="#">
       <button type="submit" class="newsletter-btn">Subscribe</button>
     </form>
-    <p id="newsletterMessage" style="margin-top: 0.5rem; font-size: 0.8rem; display: none;"></p>
+    <div id="newsletterMessage" class="newsletter-message"></div>
   </div>
 </section>
 
@@ -315,9 +712,10 @@
     <div class="footer-links">
       <h4>Explore</h4>
       <a href="#home">Home</a>
-      <a href="#products">Candles</a>
-      <a href="#coming-soon">Incense (Coming Soon)</a>
-      <a href="#about">Our Story</a>
+      <a href="#fire">Candles</a>
+      <a href="#refills">Refills</a>
+      <a href="#air">Bath Teas</a>
+      <a href="#curated">Curated Intentions</a>
     </div>
     <div class="footer-links">
       <h4>Support</h4>
@@ -328,7 +726,7 @@
     <div class="footer-contact">
       <h4>Connect</h4>
       <div class="contact-info">
-        <i class="far fa-envelope"></i> moyayapurifyingessentials@gmail.com<br>
+        <i class="far fa-envelope"></i> moyanapurifyingessentials@gmail.com<br>
         <i class="fab fa-whatsapp"></i> 068 018 4565<br>
         <i class="fab fa-instagram"></i> @moyana_purifying_essentials
       </div>
@@ -353,63 +751,58 @@
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-total">
     <span>Total</span>
-    <span id="cartTotal">$0.00</span>
+    <span id="cartTotal">R0.00</span>
   </div>
   <button class="btn-checkout" id="checkoutBtn">Proceed to Checkout</button>
   <div class="checkout-form" id="checkoutForm">
     <h4 style="margin-bottom: 1rem;">Complete Your Order</h4>
-    <input type="text" id="customerName" placeholder="Full Name" required>
-    <input type="email" id="customerEmail" placeholder="Email Address" required>
-    <input type="tel" id="customerPhone" placeholder="Phone Number (for WhatsApp updates)">
+    <input type="text" id="customerName" placeholder="Full Name *" required>
+    <input type="email" id="customerEmail" placeholder="Email Address *" required>
+    <input type="tel" id="customerPhone" placeholder="Phone Number">
+    <input type="text" id="customerLocation" placeholder="Delivery Address *" required>
     <div class="order-summary" id="orderSummary"></div>
-    <div class="payment-options">
-      <div class="payment-btn" data-method="payfast">
-        <i class="fas fa-credit-card"></i>
-        PayFast
-      </div>
-      <div class="payment-btn" data-method="paypal">
-        <i class="fab fa-paypal"></i>
-        PayPal
-      </div>
-    </div>
-    <button class="btn-checkout" id="placeOrderBtn">Place Order & Pay</button>
+    <button class="btn-checkout" id="placeOrderBtn">Pay with PayFast</button>
   </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <p>Redirecting to PayFast secure payment...</p>
 </div>
 
 <!-- Notification -->
 <div class="notification" id="notification">Item added to cart</div>
 
 <script>
-// ==================== CONFIGURATION ====================// 
-const EMAILJS_PUBLIC_KEY = "PUBLIC_KEY_HERE"; // 
-const EMAILJS_SERVICE_ID = "moyana_service";
-const EMAILJS_TEMPLATE_ID = "moyana_order_template";
+// ==================== CONFIGURATION ====================
+const PAYFAST_MERCHANT_ID = "34507639";
+const PAYFAST_MERCHANT_KEY = "bfayaezmpcnzt";
+const PAYFAST_PASSPHRASE = "";
+const IS_TEST_MODE = false;
+const PAYFAST_URL = IS_TEST_MODE ? "https://sandbox.payfast.co.za/eng/process" : "https://www.payfast.co.za/eng/process";
 
-// PayFast Test Credentials (replace with live credentials when ready)
-const PAYFAST_MERCHANT_ID = "10000100"; // Test merchant ID
-const PAYFAST_MERCHANT_KEY = "46f0cd694581a"; // Test merchant key
+// ==================== BUNDLE PRICING RULES ====================
+const CANDLE_IDS = [4, 10, 11, 12];
+const CANDLE_SINGLE = 480;
+const CANDLE_BUNDLE = 1350;
 
-// ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize EmailJS
-  if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY_HERE") {
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    console.log("✅ EmailJS initialized");
-  } else {
-    console.warn("⚠️ EmailJS not configured. Get your key from emailjs.com");
-  }
-  
-  loadCart();
-  updateCartDisplay();
-});
+const TEA_IDS = [15];
+const TEA_SINGLE = 150;
+const TEA_BUNDLE = 400;
 
-// ==================== CART FUNCTIONALITY ====================
+// Service IDs
+const SERVICE_INTENTIONS = 30;
+const SERVICE_CONSULT = 31;
+
+// ==================== CART STATE ====================
 let cart = [];
 
 function loadCart() {
   const saved = localStorage.getItem('moyana_cart');
   if (saved) cart = JSON.parse(saved);
   updateCartIcon();
+  updateCartDisplay();
 }
 
 function saveCart() {
@@ -422,102 +815,221 @@ function updateCartIcon() {
   document.getElementById('cart-count').textContent = total;
 }
 
-function addToCart(id, name, price) {
-  const existing = cart.find(i => i.id === id);
+// ==================== ADD TO CART ====================
+function addToCart(id, name, price, scent, extra) {
+  const cartKey = scent ? `${id}-${scent}` : `${id}`;
+
+  if (id === SERVICE_INTENTIONS || id === SERVICE_CONSULT) {
+    // Replace existing service entry (update details)
+    cart = cart.filter(i => i.id !== id);
+    cart.push({
+      cartKey: `service-${id}`,
+      id: parseInt(id),
+      name: name,
+      price: parseFloat(price),
+      quantity: 1,
+      scent: null,
+      extra: extra || null
+    });
+    saveCart();
+    updateCartDisplay();
+    showNotification(`${name} added to cart!`);
+    return;
+  }
+
+  const existing = cart.find(i => i.cartKey === cartKey);
   if (existing) {
     existing.quantity++;
   } else {
-    cart.push({ id: parseInt(id), name, price: parseFloat(price), quantity: 1 });
+    cart.push({
+      cartKey: cartKey,
+      id: parseInt(id),
+      name: name,
+      price: parseFloat(price),
+      quantity: 1,
+      scent: scent || null,
+      extra: extra || null
+    });
   }
   saveCart();
   updateCartDisplay();
-  showNotification(`${name} added to cart!`);
+  showNotification(scent ? `${name} (${scent}) added!` : `${name} added to cart!`);
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(i => i.id !== id);
+function removeFromCart(cartKey) {
+  cart = cart.filter(i => i.cartKey !== cartKey);
   saveCart();
   updateCartDisplay();
 }
 
-function updateQuantity(id, delta) {
-  const item = cart.find(i => i.id === id);
-  if (item) {
-    item.quantity += delta;
-    if (item.quantity <= 0) removeFromCart(id);
-    else saveCart();
-    updateCartDisplay();
+function updateQuantity(cartKey, delta) {
+  const item = cart.find(i => i.cartKey === cartKey);
+  if (!item) return;
+  if (item.id === SERVICE_INTENTIONS || item.id === SERVICE_CONSULT) {
+    if (delta < 0) removeFromCart(cartKey);
+    return;
   }
+  item.quantity += delta;
+  if (item.quantity <= 0) removeFromCart(cartKey);
+  else saveCart();
+  updateCartDisplay();
 }
 
+// ==================== CALCULATE TOTALS ====================
+function calculateCartTotals() {
+  let candleCount = 0, candleSubtotal = 0;
+  let teaCount = 0, teaSubtotal = 0;
+  let otherSubtotal = 0;
+
+  cart.forEach(item => {
+    const lineTotal = item.price * item.quantity;
+    if (CANDLE_IDS.includes(item.id)) {
+      candleCount += item.quantity;
+      candleSubtotal += lineTotal;
+    } else if (TEA_IDS.includes(item.id)) {
+      teaCount += item.quantity;
+      teaSubtotal += lineTotal;
+    } else {
+      otherSubtotal += lineTotal;
+    }
+  });
+
+  const candleBundles = Math.floor(candleCount / 3);
+  const candleRemainder = candleCount % 3;
+  const candleTotal = (candleBundles * CANDLE_BUNDLE) + (candleRemainder * CANDLE_SINGLE);
+  const candleSavings = candleSubtotal - candleTotal;
+
+  const teaBundles = Math.floor(teaCount / 3);
+  const teaRemainder = teaCount % 3;
+  const teaTotal = (teaBundles * TEA_BUNDLE) + (teaRemainder * TEA_SINGLE);
+  const teaSavings = teaSubtotal - teaTotal;
+
+  const total = candleTotal + teaTotal + otherSubtotal;
+
+  return {
+    total,
+    candleBundles, candleRemainder, candleCount, candleSavings,
+    teaBundles, teaRemainder, teaCount, teaSavings
+  };
+}
+
+// ==================== UPDATE CART DISPLAY ====================
 function updateCartDisplay() {
   const container = document.getElementById('cartItems');
   const totalSpan = document.getElementById('cartTotal');
-  
+
   if (cart.length === 0) {
     container.innerHTML = '<p style="text-align: center; color: var(--sage); padding: 2rem;">Your ritual cart is empty.<br>Add some candles to begin.</p>';
-    totalSpan.textContent = '$0.00';
+    totalSpan.textContent = 'R0.00';
     return;
   }
-  
+
   let html = '';
-  let total = 0;
   cart.forEach(item => {
-    total += item.price * item.quantity;
+    const scentLine = item.scent ? `<div class="cart-item-scent">🌿 ${item.scent}</div>` : '';
+    const isService = item.id === SERVICE_INTENTIONS || item.id === SERVICE_CONSULT;
+    let extraLine = '';
+    if (item.extra) {
+      if (item.id === SERVICE_INTENTIONS) {
+        extraLine = `<div class="cart-item-extra"><strong>Intentions:</strong>\n${item.extra}</div>`;
+      } else if (item.id === SERVICE_CONSULT) {
+        extraLine = `<div class="cart-item-extra"><strong>Details:</strong>\n${item.extra}</div>`;
+      }
+    }
     html += `
       <div class="cart-item">
         <div class="cart-item-details">
-          <h4>${item.name}</h4>
-          <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
+          <h4>${item.name}${isService ? ' <span style="font-size:0.75rem;color:var(--sage);">(per order)</span>' : ''}</h4>
+          ${scentLine}
+          <div class="cart-item-price">R${item.price.toFixed(2)} ${isService ? '' : `x ${item.quantity}`}</div>
+          ${extraLine}
         </div>
         <div class="cart-item-actions">
-          <button onclick="updateQuantity(${item.id}, -1)">-</button>
-          <button onclick="updateQuantity(${item.id}, 1)">+</button>
-          <button onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
+          ${isService ? '' : `<button onclick="updateQuantity('${item.cartKey}', -1)">-</button>
+          <button onclick="updateQuantity('${item.cartKey}', 1)">+</button>`}
+          <button onclick="removeFromCart('${item.cartKey}')"><i class="fas fa-trash"></i></button>
         </div>
       </div>
     `;
   });
-  
+
+  const t = calculateCartTotals();
+
+  if (t.candleBundles > 0) {
+    html += `
+      <div style="background: #e8f2e5; border-left: 4px solid var(--evergreen); padding: 0.8rem; border-radius: 10px; margin-top: 0.6rem; font-size: 0.9rem; color: var(--evergreen);">
+        🎉 <strong>Candle Bundle Applied!</strong><br>
+        ${t.candleBundles} × 3-candle bundle${t.candleBundles > 1 ? 's' : ''} at R${CANDLE_BUNDLE} each.<br>
+        You saved <strong>R${t.candleSavings.toFixed(2)}</strong>!
+      </div>
+    `;
+  } else if (t.candleCount === 2) {
+    html += `<div style="background: #fff4e0; border-left: 4px solid var(--terracotta); padding: 0.8rem; border-radius: 10px; margin-top: 0.6rem; font-size: 0.9rem; color: var(--terracotta);">🔥 Add <strong>1 more candle</strong> to unlock the bundle and save <strong>R90!</strong></div>`;
+  } else if (t.candleCount === 1) {
+    html += `<div style="background: #fff4e0; border-left: 4px solid var(--terracotta); padding: 0.8rem; border-radius: 10px; margin-top: 0.6rem; font-size: 0.9rem; color: var(--terracotta);">🔥 Add <strong>2 more candles</strong> to unlock the bundle and save <strong>R90!</strong></div>`;
+  }
+
+  if (t.teaBundles > 0) {
+    html += `
+      <div style="background: #e8f2e5; border-left: 4px solid var(--evergreen); padding: 0.8rem; border-radius: 10px; margin-top: 0.6rem; font-size: 0.9rem; color: var(--evergreen);">
+        🌬️ <strong>Bath Tea Bundle Applied!</strong><br>
+        ${t.teaBundles} × 3-tea bundle${t.teaBundles > 1 ? 's' : ''} at R${TEA_BUNDLE} each.<br>
+        You saved <strong>R${t.teaSavings.toFixed(2)}</strong>!
+      </div>
+    `;
+  } else if (t.teaCount === 2) {
+    html += `<div style="background: #fff4e0; border-left: 4px solid var(--terracotta); padding: 0.8rem; border-radius: 10px; margin-top: 0.6rem; font-size: 0.9rem; color: var(--terracotta);">🌬️ Add <strong>1 more bath tea</strong> to unlock the bundle and save <strong>R50!</strong></div>`;
+  } else if (t.teaCount === 1) {
+    html += `<div style="background: #fff4e0; border-left: 4px solid var(--terracotta); padding: 0.8rem; border-radius: 10px; margin-top: 0.6rem; font-size: 0.9rem; color: var(--terracotta);">🌬️ Add <strong>2 more bath teas</strong> to unlock the bundle and save <strong>R50!</strong></div>`;
+  }
+
   container.innerHTML = html;
-  totalSpan.textContent = `$${total.toFixed(2)}`;
-  
-  // Update order summary in checkout
+  totalSpan.textContent = `R${t.total.toFixed(2)}`;
   updateOrderSummary();
 }
 
+// ==================== UPDATE ORDER SUMMARY ====================
 function updateOrderSummary() {
   const summary = document.getElementById('orderSummary');
   if (!summary) return;
-  
+
   if (cart.length === 0) {
     summary.innerHTML = '<p>Your cart is empty</p>';
     return;
   }
-  
+
   let items = '';
-  let total = 0;
   cart.forEach(item => {
-    total += item.price * item.quantity;
-    items += `<div>${item.name} x ${item.quantity} — $${(item.price * item.quantity).toFixed(2)}</div>`;
+    const scentText = item.scent ? ` (${item.scent})` : '';
+    items += `<div>${item.name}${scentText} x ${item.quantity} — R${(item.price * item.quantity).toFixed(2)}</div>`;
   });
-  
+
+  const t = calculateCartTotals();
+
+  let savingsHtml = '';
+  if (t.candleBundles > 0) savingsHtml += `<div style="color: var(--evergreen); margin-top: 0.4rem; font-weight: 600;">🎉 Candle Bundle Discount — −R${t.candleSavings.toFixed(2)}</div>`;
+  if (t.teaBundles > 0) savingsHtml += `<div style="color: var(--evergreen); margin-top: 0.4rem; font-weight: 600;">🌬️ Bath Tea Bundle Discount — −R${t.teaSavings.toFixed(2)}</div>`;
+
   summary.innerHTML = `
     <strong>Order Summary:</strong><br>
     ${items}
+    ${savingsHtml}
     <hr style="margin: 0.5rem 0;">
-    <strong>Total: $${total.toFixed(2)}</strong>
+    <strong>Total: R${t.total.toFixed(2)}</strong>
+    <p style="font-size: 0.8rem; margin-top: 0.5rem;">You will be redirected to PayFast to complete payment securely.</p>
   `;
 }
 
 function showNotification(msg) {
   const notif = document.getElementById('notification');
-  notif.textContent = msg;
-  notif.classList.add('show');
-  setTimeout(() => notif.classList.remove('show'), 2000);
+  if (notif) {
+    notif.textContent = msg;
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 2200);
+  }
 }
 
-// ==================== CART DRAWER CONTROLS ====================
+// ==================== CART CONTROLS ====================
 function openCart() {
   document.getElementById('cartDrawer').classList.add('open');
   document.getElementById('cartOverlay').classList.add('active');
@@ -542,73 +1054,146 @@ document.getElementById('checkoutBtn').addEventListener('click', () => {
   document.getElementById('checkoutForm').classList.add('active');
 });
 
-// ==================== ADD TO CART BUTTONS ====================
-document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
+// ==================== ADD TO CART BUTTONS (products) ====================
+document.querySelectorAll('.product-card .btn-add-to-cart').forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    const id = btn.dataset.id;
+    const card = btn.closest('.product-card');
+    const id = parseInt(btn.dataset.id);
     const name = btn.dataset.name;
-    const price = btn.dataset.price;
-    addToCart(id, name, price);
+    const price = parseFloat(btn.dataset.price);
+    const hasScent = card.dataset.hasScent === 'true';
+
+    let scent = null;
+    if (hasScent) {
+      const select = card.querySelector('.scent-select');
+      if (select) {
+        scent = select.value;
+        if (!scent) {
+          showNotification('Please choose a scent first 🌿');
+          select.classList.add('error');
+          select.focus();
+          setTimeout(() => select.classList.remove('error'), 2500);
+          return;
+        }
+      }
+    }
+
+    addToCart(id, name, price, scent);
     openCart();
   });
 });
 
-// ==================== PAYMENT INTEGRATION ====================
-let selectedPayment = 'payfast';
+// ==================== PERSONALISED INTENTIONS (inline textarea) ====================
+document.getElementById('addIntentionsBtn').addEventListener('click', () => {
+  const intentionsField = document.getElementById('intentionsText');
+  const value = intentionsField.value.trim();
 
-document.querySelectorAll('.payment-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedPayment = btn.dataset.method;
-  });
+  if (!value) {
+    showNotification('Please write your intentions first 🕯️');
+    intentionsField.classList.add('error');
+    intentionsField.focus();
+    setTimeout(() => intentionsField.classList.remove('error'), 2500);
+    return;
+  }
+
+  addToCart(SERVICE_INTENTIONS, 'Personalised Intentions', 50.00, null, value);
+  intentionsField.value = ''; // clear after adding
+  openCart();
 });
-document.querySelector('.payment-btn').classList.add('active');
 
-async function sendOrderConfirmation(customerName, customerEmail, orderDetails, total) {
-  if (!EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY === "vBuE54_a2XZ7B_RST") {
-    console.warn("EmailJS not configured");
-    return false;
-  }
-  
-  try {
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      customer_name: customerName,
-      customer_email: customerEmail,
-      order_items: orderDetails,
-      total_amount: `$${total.toFixed(2)}`,
-      order_date: new Date().toLocaleString()
-    });
-    console.log("✅ Order confirmation sent");
-    return true;
-  } catch (error) {
-    console.error("Email error:", error);
-    return false;
-  }
+// ==================== CONSULTATION EXPAND/COLLAPSE ====================
+const consultToggle = document.getElementById('consultToggle');
+const consultContent = document.getElementById('consultContent');
+consultToggle.addEventListener('click', () => {
+  consultToggle.classList.toggle('open');
+  consultContent.classList.toggle('open');
+});
+
+// ==================== ADD CONSULTATION TO CART ====================
+document.getElementById('addConsultBtn').addEventListener('click', () => {
+  const time = document.getElementById('consultTime').value.trim();
+  const phone = document.getElementById('consultPhone').value.trim();
+  const notes = document.getElementById('consultNotes').value.trim();
+
+  let detailsText = '';
+  if (time) detailsText += `Preferred time: ${time}\n`;
+  if (phone) detailsText += `Contact number: ${phone}\n`;
+  if (notes) detailsText += `Notes: ${notes}`;
+  detailsText = detailsText.trim();
+
+  // Details are optional – no validation, just capture what's there
+  addToCart(SERVICE_CONSULT, '30-min Telephonic Consultation', 150.00, null, detailsText || null);
+
+  // Reset fields after adding
+  document.getElementById('consultTime').value = '';
+  document.getElementById('consultPhone').value = '';
+  document.getElementById('consultNotes').value = '';
+
+  openCart();
+});
+
+// ==================== WHATSAPP NOTIFICATION ====================
+function sendWhatsAppNotification(customerName, customerEmail, customerPhone, customerLocation, orderItems, total) {
+  let orderDetails = '';
+  orderItems.forEach(item => {
+    const scentText = item.scent ? ` (${item.scent})` : '';
+    orderDetails += `${item.name}${scentText} x ${item.quantity} — R${(item.price * item.quantity).toFixed(2)}\n`;
+    if (item.extra) {
+      const label = item.id === SERVICE_INTENTIONS ? '   Intentions' : '   Details';
+      orderDetails += `${label}:\n   ${item.extra.replace(/\n/g, '\n   ')}\n`;
+    }
+  });
+
+  const t = calculateCartTotals();
+  let savingsNote = '';
+  if (t.candleBundles > 0) savingsNote += `🎉 Candle bundle: -R${t.candleSavings.toFixed(2)}\n`;
+  if (t.teaBundles > 0) savingsNote += `🌬️ Bath tea bundle: -R${t.teaSavings.toFixed(2)}\n`;
+
+  const message = `🕯️ NEW ORDER FROM MOYANA WEBSITE 🕯️%0A%0A👤 Customer: ${customerName}%0A📧 Email: ${customerEmail}%0A📱 Phone: ${customerPhone || 'Not provided'}%0A📍 Location: ${customerLocation || 'Not provided'}%0A%0A📦 ORDER:%0A${encodeURIComponent(orderDetails)}%0A${savingsNote ? encodeURIComponent(savingsNote) : ''}%0A💰 TOTAL: R${total.toFixed(2)}%0A%0APlease process this order and contact customer for payment confirmation.`;
+  window.open(`https://wa.me/27680184565?text=${message}`, '_blank');
 }
 
-function processPayFastOrder(customerName, customerEmail, total) {
-  // Create form and submit to PayFast
+// ==================== PAYFAST ====================
+function generateOrderId() {
+  return 'MOYANA_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+}
+
+function submitToPayFast(customerName, customerEmail, customerPhone, total, orderId, cartItems) {
+  let baseUrl = window.location.origin + window.location.pathname;
+  baseUrl = baseUrl.replace(/\/$/, '');
+  const returnUrl = baseUrl + '?payment=success';
+  const cancelUrl = baseUrl + '?payment=cancel';
+  const notifyUrl = baseUrl;
+  const nameParts = customerName.trim().split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || '';
+  let itemDescription = '';
+  cartItems.forEach((item, index) => {
+    const scentText = item.scent ? ` [${item.scent}]` : '';
+    itemDescription += `${item.name}${scentText} x ${item.quantity}`;
+    if (index < cartItems.length - 1) itemDescription += ', ';
+  });
+  if (itemDescription.length > 100) itemDescription = itemDescription.substring(0, 97) + '...';
   const form = document.createElement('form');
   form.method = 'POST';
-  form.action = 'https://sandbox.payfast.co.za/eng/process'; // Use live URL for production
-  
+  form.action = PAYFAST_URL;
   const params = {
     merchant_id: PAYFAST_MERCHANT_ID,
     merchant_key: PAYFAST_MERCHANT_KEY,
-    return_url: window.location.href,
-    cancel_url: window.location.href,
-    notify_url: window.location.href,
-    name_first: customerName.split(' ')[0] || '',
-    name_last: customerName.split(' ').slice(1).join(' ') || '',
+    return_url: returnUrl,
+    cancel_url: cancelUrl,
+    notify_url: notifyUrl,
+    name_first: firstName,
+    name_last: lastName,
     email_address: customerEmail,
-    m_payment_id: `MOYANA_${Date.now()}`,
+    cell_number: customerPhone || '',
+    m_payment_id: orderId,
     amount: total.toFixed(2),
-    item_name: 'Moyana Ritual Candles',
-    item_description: `Order from ${customerName}`,
+    item_name: 'Moyana Ritual Products',
+    item_description: itemDescription,
   };
-  
+  if (PAYFAST_PASSPHRASE) params.passphrase = PAYFAST_PASSPHRASE;
   for (const [key, value] of Object.entries(params)) {
     const input = document.createElement('input');
     input.type = 'hidden';
@@ -616,97 +1201,82 @@ function processPayFastOrder(customerName, customerEmail, total) {
     input.value = value;
     form.appendChild(input);
   }
-  
   document.body.appendChild(form);
+  document.getElementById('loadingOverlay').classList.add('active');
   form.submit();
 }
 
-function processPayPalOrder(customerName, customerEmail, total, orderItems) {
-  // Create PayPal order
-  showNotification('Redirecting to PayPal...');
-  
-  // In production, you'd use PayPal's JS SDK
-  // For demo, we'll show a modal
-  alert(`🔮 PayPal Demo\n\nOrder from: ${customerName}\nEmail: ${customerEmail}\nTotal: $${total.toFixed(2)}\n\nIn production, this would redirect to PayPal.`);
-  
-  // After payment, send email
-  sendOrderConfirmation(customerName, customerEmail, orderItems, total);
-  clearCartAfterOrder();
-}
-
-function clearCartAfterOrder() {
-  cart = [];
-  saveCart();
-  updateCartDisplay();
-  closeCart();
-  showNotification('✨ Thank you! Order confirmed. Check your email.');
-}
-
-document.getElementById('placeOrderBtn').addEventListener('click', async () => {
+// ==================== PLACE ORDER ====================
+document.getElementById('placeOrderBtn').addEventListener('click', () => {
   const name = document.getElementById('customerName').value.trim();
   const email = document.getElementById('customerEmail').value.trim();
   const phone = document.getElementById('customerPhone').value.trim();
-  
-  if (!name || !email) {
-    showNotification('Please enter your name and email');
+  const location = document.getElementById('customerLocation').value.trim();
+
+  if (!name || !email || !location) {
+    showNotification('Please fill in Name, Email, and Delivery Address');
     return;
   }
-  
+
   if (cart.length === 0) {
     showNotification('Your cart is empty');
     return;
   }
-  
-  let total = 0;
-  let orderDetails = '';
-  cart.forEach(item => {
-    total += item.price * item.quantity;
-    orderDetails += `${item.name} x ${item.quantity} — $${(item.price * item.quantity).toFixed(2)}\n`;
-  });
-  
-  // Send order confirmation email (async, don't wait)
-  sendOrderConfirmation(name, email, orderDetails, total);
-  
-  // Process payment based on selection
-  if (selectedPayment === 'payfast') {
-    processPayFastOrder(name, email, total);
-  } else {
-    processPayPalOrder(name, email, total, orderDetails);
-  }
+
+  const t = calculateCartTotals();
+  const orderId = generateOrderId();
+
+  sendWhatsAppNotification(name, email, phone, location, cart, t.total);
+  submitToPayFast(name, email, phone, t.total, orderId, cart);
 });
 
-// ==================== NEWSLETTER SUBSCRIPTION ====================
-document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('newsletterEmail').value;
-  const msgDiv = document.getElementById('newsletterMessage');
-  
-  msgDiv.style.display = 'block';
-  
-  if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "") {
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, 'moyana_newsletter', {
-        subscriber_email: email,
-        subscribe_date: new Date().toLocaleString()
-      });
-      msgDiv.innerHTML = '✨ Thank you for joining our ritual! Check your email.';
-      msgDiv.style.color = 'green';
-      document.getElementById('newsletterEmail').value = '';
-    } catch (error) {
-      msgDiv.innerHTML = 'Thank you for subscribing! (Demo mode)';
-      msgDiv.style.color = 'var(--terracotta)';
-      document.getElementById('newsletterEmail').value = '';
-    }
-  } else {
-    msgDiv.innerHTML = 'Thank you for subscribing! (Demo mode - configure EmailJS for real emails)';
-    msgDiv.style.color = 'var(--terracotta)';
-    document.getElementById('newsletterEmail').value = '';
+// ==================== CHECK PAYMENT STATUS ====================
+function checkPaymentStatus() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const status = urlParams.get('payment');
+  if (status === 'success') {
+    cart = [];
+    saveCart();
+    updateCartDisplay();
+    closeCart();
+    showNotification('✓ Payment successful! Thank you for your order.');
+    window.history.replaceState({}, document.title, window.location.pathname);
+    setTimeout(() => {
+      alert('🎉 ORDER CONFIRMED!\n\nThank you for your sacred order with Moyana Purifying Essentials.\n\nYou will receive a WhatsApp confirmation shortly.\n\nWe will prepare your ritual products and contact you within 24-48 hours.\n\nLight with intention. Cleanse with purpose.\n\n— Moyana Team');
+    }, 500);
+  } else if (status === 'cancel') {
+    showNotification('Payment was cancelled. You can try again anytime.');
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
-  
-  setTimeout(() => {
-    msgDiv.style.display = 'none';
-  }, 5000);
-});
+}
+
+// ==================== NEWSLETTER ====================
+const newsletterForm = document.getElementById('newsletterForm');
+const newsletterMessage = document.getElementById('newsletterMessage');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(newsletterForm);
+    try {
+      const response = await fetch(newsletterForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        newsletterMessage.textContent = '✨ Thank you for joining our ritual! Check your email for updates.';
+        newsletterMessage.className = 'newsletter-message success';
+        newsletterForm.reset();
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      newsletterMessage.textContent = '❌ Something went wrong. Please try again.';
+      newsletterMessage.className = 'newsletter-message error';
+    }
+    setTimeout(() => { newsletterMessage.className = 'newsletter-message'; }, 5000);
+  });
+}
 
 // ==================== SMOOTH SCROLL ====================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -717,10 +1287,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Shop button scroll
-document.querySelector('.btn-shop').addEventListener('click', () => {
-  document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-});
+// ==================== INIT ====================
+loadCart();
+checkPaymentStatus();
 </script>
 </body>
 </html>
